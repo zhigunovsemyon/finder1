@@ -13,5 +13,9 @@ project ("AddWork1")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED CMAKE_C_STANDARD)
 
+if (WIN32)
+	set(DIRENT_DIR "C:\\dirent-1.24")
+	include_directories(${DIRENT_DIR}/include)
+endif()
+
 add_executable (${PROJECT_NAME} "src/main.c")
-target_link_libraries (${PROJECT_NAME} m)
