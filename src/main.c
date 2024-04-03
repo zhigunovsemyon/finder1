@@ -5,17 +5,17 @@
 #include <stdio.h>
 #include <string.h>
 
-enum Errors
-{
-	NOERR,
-	BADCALL
-};
-
 #ifdef WIN32
 #define SEP "\\"
 #else
 #define SEP "/"
 #endif /* ifdef WIN32 */
+
+enum Errors
+{
+	NOERR,
+	BADCALL
+};
 
 int PrintFileLocations(char const *StartDir, char const DesiredChar);
 int InnerPrintFileLocations(int count, char const *StartDir, char const DesiredChar);
@@ -72,6 +72,7 @@ int InnerPrintFileLocations(int count, char const *StartDir, char const DesiredC
 		{
 			printf("%s%s%s\n", StartDir, SEP, ep->d_name);
 			count++;
+			continue;
 		}
 
 		// Выделение памяти под путь к очередному файлу, сохранение его имени
