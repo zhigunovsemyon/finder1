@@ -20,7 +20,7 @@ enum Errors
 int PrintFileLocations(char const *StartDir, char const DesiredChar);
 int InnerPrintFileLocations(int count, char const *StartDir, char const DesiredChar);
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
 	// Если было переданно недостаточно аргументов, работу можно сразу прекратить
 	if (argc < 3)
@@ -68,7 +68,7 @@ int InnerPrintFileLocations(int count, char const *StartDir, char const DesiredC
 		// Проверка каждого элемента из папки и, если его первый символ
 		// совпал с DesiredChar, при этом элемент не является другой папкой
 		// - вывод его пути и увеличение счётчика
-		if (4 != ep->d_type && DesiredChar == ep->d_name[0])
+		if (DT_DIR != ep->d_type && DesiredChar == ep->d_name[0])
 		{
 			printf("%s%s%s\n", StartDir, SEP, ep->d_name);
 			count++;
