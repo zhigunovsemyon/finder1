@@ -59,27 +59,27 @@ int InnerPrintFileLocations(int count, char const *StartDir, char const DesiredC
 
 	struct dirent *ep;
 	// Цикл перебирает элементы данной папки
-	while (ep = readdir(dp))
+	while ((ep = readdir(dp)))
 	{
 		// Если у элемента название .. или . , то он игнорируется
 		if (strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
 			continue;
-
-		// Проверка каждого элемента из папки и, если его первый символ
-		// совпал с DesiredChar, при этом элемент не является другой папкой
-		// - вывод его пути и увеличение счётчика
-		if (DT_DIR != ep->d_type && DesiredChar == ep->d_name[0])
-		{
-			printf("%s%s%s\n", StartDir, SEP, ep->d_name);
-			count++;
-			continue;
-		}
 
 		// Выделение памяти под путь к очередному файлу, сохранение его имени
 		char *newDir = (char *)malloc(sizeof(char) * (strlen(StartDir) + strlen(ep->d_name) + 2));
 		strcpy(newDir, StartDir);
 		strcat(newDir, SEP);
 		strcat(newDir, ep->d_name);
+
+		// Проверка каждого элемента из папки и, если его первый символ
+		// совпал с DesiredChar, при этом элемент не является другой папкой
+		// - вывод его пути и увеличение счётчика
+		if (DT_DIR != ep->d_type && DesiredChar == ep->d_name[0])
+		{
+			printf("%s\n", newDir);
+			count++;
+			continue;
+		}
 
 		// Открытие очередного файла
 		count = InnerPrintFileLocations(count, newDir, DesiredChar);
